@@ -7,15 +7,15 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#ffffff;
-  --bg2:#f8f8f7;
-  --border:#e0dedd;
-  --border2:#eae9e7;
-  --t1:#111110;
-  --t2:#2a2a28;
-  --t3:#6b6a66;
-  --t4:#9a9994;
-  --accent:#111110;
+  --bg:#0f0f0f;
+  --bg2:#0b0b0b;
+  --border:#444442;
+  --border2:#383836;
+  --t1:#ffffff;
+  --t2:#f0ede8;
+  --t3:#d0cdc8;
+  --t4:#b0ada8;
+  --accent:#ffffff;
   --sans:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
   --mono:'SF Mono','Fira Mono','Consolas',monospace;
 }
@@ -97,13 +97,17 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 
 @media(max-width:640px){
   .layout{flex-direction:column;}
-  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;}
-  .sid-profile{flex:1;}
-  .sid-nav{display:flex;flex-direction:row;padding:8px;}
+  .sidebar{width:100%;height:auto;position:static;}
+  .sid-profile{padding:20px 20px 16px;}
+  .sid-nav{display:flex;flex-direction:row;padding:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .nav-btn{flex:1;padding:10px 4px;font-size:11px;text-align:center;border:none;border-radius:0;border-right:1px solid var(--border);}
+  .nav-btn:last-child{border-right:none;}
+  .nav-btn.on{background:var(--t1);color:var(--bg);}
+  .nav-dot{display:none;}
   .sid-foot{display:none;}
-  .hero{padding:28px 24px 20px;}
-  .section{padding:24px;}
-  .hero-title{font-size:26px;}
+  .section{padding:20px;}
+  .entry{grid-template-columns:80px 1fr;gap:10px;}
+  .work-row{grid-template-columns:44px 1fr auto;}
 }
 </style>
 </head>
@@ -121,6 +125,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
       <div class="sid-name-en">Park Hyuk</div>
       <div class="sid-desc">Recording Engineer</div>
       <div class="sid-desc">Music Producer</div>
+      <div class="sid-desc">SoundPool Studios Co-Founder</div>
       <div class="sid-desc">Professor, Hongik University</div>
     </div>
     <nav class="sid-nav">
@@ -151,7 +156,6 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 
     <!-- 경력 -->
     <div class="section on" id="career">
-      <div class="sec-head"><span class="sec-title" data-ko="CAREER" data-en="CAREER">CAREER</span><div class="sec-line"></div></div>
 
       <div class="group-label" data-ko="레코딩 엔지니어" data-en="RECORDING ENGINEER">레코딩 엔지니어</div>
       <div class="entry"><div class="e-yr"><span data-ko="2012.10 – 현재" data-en="2012.10 – Present">2012.10 – 현재</span></div><div class="e-body"><div class="e-name">SoundPool Studios</div><div class="e-role" data-ko="공동 대표" data-en="Co-Founder">공동 대표</div></div></div>
@@ -170,7 +174,6 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 
     <!-- 학력 -->
     <div class="section" id="education">
-      <div class="sec-head"><span class="sec-title" data-ko="EDUCATION" data-en="EDUCATION">EDUCATION</span><div class="sec-line"></div></div>
       <div class="entry">
         <div class="e-yr">2005 – 2007</div>
         <div>
@@ -185,7 +188,6 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 
     <!-- 저역서 -->
     <div class="section" id="publications">
-      <div class="sec-head"><span class="sec-title" data-ko="PUBLICATIONS" data-en="PUBLICATIONS">PUBLICATIONS</span><div class="sec-line"></div></div>
       <div class="book-card">
         <div class="book-title" data-ko="음악믹싱, 예술과 기술의 만남" data-en="Music Mixing: Where Art Meets Technology">음악믹싱, 예술과 기술의 만남</div>
         <div class="book-meta">2024.02 · 바른북스</div>
@@ -194,7 +196,6 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 
     <!-- 작품 -->
     <div class="section" id="works">
-      <div class="sec-head"><span class="sec-title" data-ko="WORKS" data-en="WORKS">WORKS</span><div class="sec-line"></div></div>
       <div class="works-filters" id="wf"></div>
       <div class="works-count" id="wc"></div>
       <div id="wl"></div>
