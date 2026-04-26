@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박혁 Park Hyuk</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f8f8f7;
+  --border:#e0dedd;
+  --border2:#eae9e7;
+  --t1:#111110;
+  --t2:#2a2a28;
+  --t3:#6b6a66;
+  --t4:#9a9994;
+  --accent:#111110;
+  --sans:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+  --mono:'SF Mono','Fira Mono','Consolas',monospace;
+}
+html{font-size:14px;height:100%;}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column;}
+
+/* LANG TOGGLE */
+.lang-bar{position:fixed;top:16px;right:20px;z-index:100;display:flex;gap:4px;}
+.lang-btn{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;padding:4px 10px;border:1px solid var(--border);background:transparent;color:var(--t4);cursor:pointer;border-radius:2px;transition:all .15s;}
+.lang-btn.on{border-color:var(--t3);color:var(--t2);}
+
+/* LAYOUT */
+.layout{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{width:210px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow:hidden;}
+.sid-profile{padding:32px 24px 24px;border-bottom:1px solid var(--border);}
+.sid-name-ko{font-size:22px;font-weight:500;color:var(--t1);letter-spacing:-0.5px;line-height:1;}
+.sid-name-en{font-size:12px;color:var(--t3);margin-top:5px;letter-spacing:0.3px;}
+.sid-desc{font-size:11px;color:var(--t4);margin-top:4px;line-height:1.5;}
+
+.sid-nav{flex:1;padding:16px 0;overflow-y:auto;}
+.nav-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 24px;background:none;border:none;font-family:var(--sans);font-size:12px;color:var(--t4);cursor:pointer;text-align:left;transition:color .15s;letter-spacing:0.3px;}
+.nav-btn:hover{color:var(--t2);}
+.nav-btn.on{color:var(--t1);}
+.nav-dot{width:3px;height:3px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.4;}
+.nav-btn.on .nav-dot{opacity:1;}
+
+.sid-foot{padding:20px 24px;border-top:1px solid var(--border);}
+.sid-foot-item{font-family:var(--mono);font-size:9px;color:var(--t4);margin-bottom:4px;letter-spacing:0.3px;}
+
+/* MAIN */
+.main{flex:1;min-height:100vh;}
+
+/* HERO */
+
+
+
+/* SECTIONS */
+.section{display:none;padding:40px 48px;}
+.section.on{display:block;}
+
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:28px;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-title{font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--t4);flex-shrink:0;}
+
+.group-label{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--t4);border-bottom:1px solid var(--border2);padding-bottom:8px;margin:28px 0 4px;}
+.group-label:first-child{margin-top:0;}
+
+.entry{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:9px 0;}
+.e-yr{font-family:var(--mono);font-size:10px;color:var(--t4);padding-top:1px;font-variant-numeric:tabular-nums;line-height:1.5;}
+.e-body{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.e-name{font-size:13px;font-weight:500;color:var(--t2);line-height:1.4;}
+.e-role{font-size:11px;color:var(--t4);}
+.e-note{font-size:10px;color:var(--t4);margin-top:3px;line-height:1.6;opacity:.8;width:100%;}
+
+/* BOOK */
+.book-card{border:1px solid var(--border);border-radius:4px;padding:20px 24px;display:inline-block;margin-top:8px;}
+.book-title{font-size:14px;font-weight:500;color:var(--t2);}
+.book-meta{font-family:var(--mono);font-size:9px;color:var(--t4);margin-top:6px;letter-spacing:0.5px;}
+
+/* WORKS */
+.works-filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px;}
+.wf-btn{font-family:var(--mono);font-size:9px;letter-spacing:.5px;padding:4px 12px;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--t4);cursor:pointer;transition:all .15s;}
+.wf-btn:hover{border-color:var(--t3);color:var(--t2);}
+.wf-btn.on{background:var(--t1);color:var(--bg);border-color:var(--t1);}
+.works-count{font-family:var(--mono);font-size:9px;color:var(--t4);margin-bottom:12px;letter-spacing:.5px;}
+
+.work-row{display:grid;grid-template-columns:56px 1fr auto;gap:12px;padding:9px 0;align-items:center;}
+.w-date{font-family:var(--mono);font-size:9px;color:var(--t4);font-variant-numeric:tabular-nums;}
+.w-info{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
+.w-artist{font-size:12px;color:var(--t2);white-space:nowrap;}
+.w-sep{font-size:10px;color:var(--t4);}
+.w-title{font-size:11px;color:var(--t4);line-height:1.3;}
+.w-role{display:flex;gap:3px;flex-wrap:nowrap;justify-content:flex-end;}
+.w-badge{font-family:var(--mono);font-size:8px;color:var(--t3);border:1px solid var(--border);border-radius:2px;padding:2px 5px;letter-spacing:.5px;white-space:nowrap;}
+.yr-head{font-family:var(--mono);font-size:9px;color:var(--t4);letter-spacing:2px;padding:16px 0 6px;border-bottom:1px solid var(--border);}
+.yr-head:first-child{padding-top:0;}
+
+@media(max-width:640px){
+  .layout{flex-direction:column;}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;}
+  .sid-profile{flex:1;}
+  .sid-nav{display:flex;flex-direction:row;padding:8px;}
+  .sid-foot{display:none;}
+  .hero{padding:28px 24px 20px;}
+  .section{padding:24px;}
+  .hero-title{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn on" id="btn-ko" onclick="setLang('ko')">KO</button>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sid-profile">
+      <div class="sid-name-ko">박혁</div>
+      <div class="sid-name-en">Park Hyuk</div>
+      <div class="sid-desc">Recording Engineer</div>
+      <div class="sid-desc">Music Producer</div>
+      <div class="sid-desc">Professor, Hongik University</div>
+    </div>
+    <nav class="sid-nav">
+      <button class="nav-btn on" onclick="show('career',this)">
+        <span class="nav-dot"></span>
+        <span data-ko="경력" data-en="Career">경력</span>
+      </button>
+      <button class="nav-btn" onclick="show('education',this)">
+        <span class="nav-dot"></span>
+        <span data-ko="학력" data-en="Education">학력</span>
+      </button>
+      <button class="nav-btn" onclick="show('publications',this)">
+        <span class="nav-dot"></span>
+        <span data-ko="저역서" data-en="Publications">저역서</span>
+      </button>
+      <button class="nav-btn" onclick="show('works',this)">
+        <span class="nav-dot"></span>
+        <span data-ko="작품" data-en="Works">작품</span>
+      </button>
+    </nav>
+    <div class="sid-foot">
+      <div class="sid-foot-item">coolmixing&#64;hongik.ac.kr</div>
+      <div class="sid-foot-item">02-3668-3765</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- 경력 -->
+    <div class="section on" id="career">
+      <div class="sec-head"><span class="sec-title" data-ko="CAREER" data-en="CAREER">CAREER</span><div class="sec-line"></div></div>
+
+      <div class="group-label" data-ko="레코딩 엔지니어" data-en="RECORDING ENGINEER">레코딩 엔지니어</div>
+      <div class="entry"><div class="e-yr"><span data-ko="2012.10 – 현재" data-en="2012.10 – Present">2012.10 – 현재</span></div><div class="e-body"><div class="e-name">SoundPool Studios</div><div class="e-role" data-ko="공동 대표" data-en="Co-Founder">공동 대표</div></div></div>
+      <div class="entry"><div class="e-yr">1996 – 2012</div><div class="e-body"><div class="e-name" data-ko="라이브웍스컴퍼니 · 굿엔터테인먼트 · 유니버설뮤직 · 드림팩토리 스튜디오 · Starlight Studio (London)" data-en="LiveWorks · Good Entertainment · Universal Music · DreamFactory Studio · Starlight Studio (London)">라이브웍스컴퍼니 · 굿엔터테인먼트 · 유니버설뮤직 · 드림팩토리 스튜디오 · Starlight Studio (London)</div><div class="e-role" data-ko="레코딩 엔지니어" data-en="Recording Engineer">레코딩 엔지니어</div></div></div>
+
+      <div class="group-label" data-ko="레이블 대표" data-en="LABEL DIRECTOR">레이블 대표</div>
+      <div class="entry"><div class="e-yr"><span data-ko="2009 – 현재" data-en="2009 – Present">2009 – 현재</span></div><div class="e-body"><div class="e-name">(주)엘리펀트뮤직</div><div class="e-role" data-ko="대표이사" data-en="CEO">대표이사</div></div></div>
+
+      <div class="group-label" data-ko="교수" data-en="PROFESSOR">교수</div>
+      <div class="entry"><div class="e-yr"><span data-ko="2020 – 현재" data-en="2020 – Present">2020 – 현재</span></div><div class="e-body"><div class="e-name" data-ko="홍익대학교 공연예술대학원" data-en="Hongik University Graduate School of Performing Arts">홍익대학교 공연예술대학원</div><div class="e-role" data-ko="부교수 · 실용음악" data-en="Associate Professor · Applied Music">부교수 · 실용음악</div></div></div>
+      <div class="entry"><div class="e-yr">2004 – 2020</div><div class="e-body"><div class="e-name" data-ko="국민대학교 대학원 · 상명대학교 대학원 · 경희대학교" data-en="Kookmin Univ. · Sangmyung Univ. · Kyung Hee Univ.">국민대학교 대학원 · 상명대학교 대학원 · 경희대학교</div><div class="e-role" data-ko="강사" data-en="Lecturer">강사</div></div></div>
+
+      <div class="group-label" data-ko="협회" data-en="ASSOCIATION">협회</div>
+      <div class="entry"><div class="e-yr"><span data-ko="2016.02 – 현재" data-en="2016.02 – Present">2016.02 – 현재</span></div><div class="e-body"><div class="e-name" data-ko="(사)한국음향예술인협회" data-en="Korea Sound Arts Association">(사)한국음향예술인협회</div><div class="e-role" data-ko="이사" data-en="Board Member">이사</div></div></div>
+    </div>
+
+    <!-- 학력 -->
+    <div class="section" id="education">
+      <div class="sec-head"><span class="sec-title" data-ko="EDUCATION" data-en="EDUCATION">EDUCATION</span><div class="sec-line"></div></div>
+      <div class="entry">
+        <div class="e-yr">2005 – 2007</div>
+        <div>
+          <div class="e-body">
+            <div class="e-name" data-ko="경희대학교 아트퓨전디자인대학원" data-en="Kyung Hee Univ. Graduate School of Art Fusion Design">경희대학교 아트퓨전디자인대학원</div>
+            <div class="e-role" data-ko="퍼포밍아트학과 실용음악 · 석사" data-en="Performing Arts, Applied Music · M.A.">퍼포밍아트학과 실용음악 · 석사</div>
+          </div>
+          <div class="e-note" data-ko="논문: 레코딩 스튜디오 설립을 위한 국내 주요 스튜디오의 시스템 현황조사 · 지도교수: 한경훈" data-en="Thesis: A Survey of Major Korean Recording Studio Systems for Studio Establishment · Advisor: Han Kyunghoon">논문: 레코딩 스튜디오 설립을 위한 국내 주요 스튜디오의 시스템 현황조사 · 지도교수: 한경훈</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 저역서 -->
+    <div class="section" id="publications">
+      <div class="sec-head"><span class="sec-title" data-ko="PUBLICATIONS" data-en="PUBLICATIONS">PUBLICATIONS</span><div class="sec-line"></div></div>
+      <div class="book-card">
+        <div class="book-title" data-ko="음악믹싱, 예술과 기술의 만남" data-en="Music Mixing: Where Art Meets Technology">음악믹싱, 예술과 기술의 만남</div>
+        <div class="book-meta">2024.02 · 바른북스</div>
+      </div>
+    </div>
+
+    <!-- 작품 -->
+    <div class="section" id="works">
+      <div class="sec-head"><span class="sec-title" data-ko="WORKS" data-en="WORKS">WORKS</span><div class="sec-line"></div></div>
+      <div class="works-filters" id="wf"></div>
+      <div class="works-count" id="wc"></div>
+      <div id="wl"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const works=[
+  {date:'2026.02.11',a:"웹툰 '재혼 황후' OST Part. 1",t:'',r:'Mixer'},
+  {date:'2026.01.13',a:'블루 스마일',t:'둘만의 하이웨이',r:'Mixer'},
+  {date:'2025.12.26',a:'우리들의 발라드',t:'Story 11',r:'Mixer'},
+  {date:'2025.12.24',a:'IN A MINUTE',t:'월간미닛 Vol. 6',r:'Mixer'},
+  {date:'2025.12.17',a:'우리들의 발라드',t:'BEST 3 : 2000',r:'Mixer'},
+  {date:'2025.12.10',a:'우리들의 발라드',t:'BEST 2 : 1990',r:'Mixer'},
+  {date:'2025.12.08',a:'최수빈',t:"It's You",r:'Producer / Mastering Engineer'},
+  {date:'2025.12.03',a:'스탠딩에그',t:'무해 pt.2 : Home Session',r:'Mixer'},
+  {date:'2025.12.03',a:'우리들의 발라드',t:'BEST 1 : 1970–1980',r:'Mixer'},
+  {date:'2025.12.01',a:'Yumeka',t:'Neverland',r:'Producer / Mastering Engineer'},
+  {date:'2025.11.30',a:'IN A MINUTE',t:'월간미닛 Vol. 5',r:'Mixer'},
+  {date:'2025.11.26',a:'우리들의 발라드',t:'Story 10',r:'Mixer'},
+  {date:'2025.11.24',a:'허민영',t:'새하얀 봄',r:'Producer / Mastering Engineer'},
+  {date:'2025.11.19',a:'우리들의 발라드',t:'Story 9',r:'Mixer'},
+  {date:'2025.11.12',a:'우리들의 발라드',t:'Story 8',r:'Mixer'},
+  {date:'2025.11.05',a:'우리들의 발라드',t:'Story 7',r:'Mixer'},
+  {date:'2025.10.29',a:'우리들의 발라드',t:'Story 6',r:'Mixer'},
+  {date:'2025.10.28',a:'IN A MINUTE',t:'월간미닛 Vol. 4',r:'Mixer'},
+  {date:'2025.10.22',a:'우리들의 발라드',t:'Story 5',r:'Mixer'},
+  {date:'2025.10.15',a:'해피엔딩',t:'아리랑고개',r:'Mixer'},
+  {date:'2025.10.15',a:'우리들의 발라드',t:'Story 4',r:'Mixer'},
+  {date:'2025.10.08',a:'우리들의 발라드',t:'Story 3',r:'Mixer'},
+  {date:'2025.10.01',a:'우리들의 발라드',t:'Story 2',r:'Mixer'},
+  {date:'2025.09.26',a:'IN A MINUTE',t:'월간미닛 Vol. 3',r:'Mixer'},
+  {date:'2025.09.24',a:'우리들의 발라드',t:'Story 1',r:'Mixer'},
+  {date:'2025.09.15',a:'IDID',t:'I did it.',r:'Mixer'},
+  {date:'2025.08.25',a:'IN A MINUTE',t:'BGM : HOW WE RISE - PLAY',r:'Mixer'},
+  {date:'2025.07.21',a:'IN A MINUTE',t:'월간미닛 Vol. 2',r:'Mixer'},
+  {date:'2025.07.02',a:'Double Ace',t:'PRESENT',r:'Mixer'},
+  {date:'2025.06.28',a:'해피엔딩',t:'주름',r:'Mixer'},
+  {date:'2025.06.20',a:'신유빈',t:'비가 거친 날이면',r:'Mastering Engineer'},
+  {date:'2025.06.13',a:'Damyiah Mornae',t:'Answer',r:'Mastering Engineer'},
+  {date:'2025.06.13',a:'유주 (YUJU)',t:'단잠',r:'Mastering Engineer'},
+  {date:'2025.06.12',a:'IN A MINUTE',t:'월간미닛 Vol. 1',r:'Mastering Engineer'},
+  {date:'2025.06.08',a:'박보영',t:'너의 얼굴을 보면',r:'Mastering Engineer'},
+  {date:'2025.05.23',a:'신유빈',t:'Summer pool!',r:'Mastering Engineer'},
+  {date:'2025.05.23',a:'Damyiah Mornae',t:'O.I.A.M',r:'Mastering Engineer'},
+  {date:'2025.05.18',a:'라포엠 (LA POEM)',t:"'귀혼' OST Part. 1",r:'Mixer'},
+  {date:'2025.04.28',a:'해피엔딩',t:'곁',r:'Mixer'},
+  {date:'2025.04.22',a:'김건',t:'이별하는 방법을 몰라서',r:'Mixer'},
+  {date:'2025.04.13',a:'NewKids',t:'ImPerfect Game OST',r:'Mixer'},
+  {date:'2025.03.30',a:'심각한 개구리',t:'날아라 개구리!',r:'Mixer'},
+  {date:'2025.03.30',a:'NewKids',t:"I'm OK, You're OK",r:'Mixer'},
+  {date:'2025.03.15',a:'IN A MINUTE',t:'Unboxing : What You Wanted',r:'Mixer'},
+  {date:'2025.03.14',a:'NewKids',t:'ImPerfect',r:'Mixer'},
+  {date:'2025.02.28',a:'심각한 개구리',t:'Rainbow',r:'Mixer'},
+  {date:'2025.02.13',a:'예린 (YERIN)',t:'이것저것 재지 말고 솔직해볼까',r:'Mixer'},
+  {date:'2024.12.25',a:'別所ユージ',t:'Vie Belle',r:'Mixer'},
+  {date:'2024.12.19',a:'이영현',t:'PRIVATE',r:'Mixer'},
+  {date:'2024.12.10',a:'최구슬',t:'EXIT',r:'Mastering Engineer'},
+  {date:'2024.12.09',a:'조각',t:'조각 001',r:'Producer / Mastering Engineer'},
+  {date:'2024.12.05',a:'BLUEPEPPERONIONTHESTREET',t:'Flight of Dreams : A Journey',r:'Producer / Mastering Engineer'},
+  {date:'2024.12.02',a:'칠운몽',t:'기다려줄래',r:'Producer / Mastering Engineer'},
+  {date:'2024.11.13',a:'김태진',t:'가을여행',r:'Mixer'},
+  {date:'2024.11.07',a:'스탠딩에그',t:'무해',r:'Mixer'},
+  {date:'2024.11.06',a:'온유',t:'아름다운 너에게',r:'Mixer'},
+  {date:'2024.11.01',a:'別所ユージ',t:'I Believe',r:'Mixer'},
+  {date:'2024.10.30',a:'OMEGA X',t:'Cool My Head',r:'Mixer'},
+  {date:'2024.10.02',a:'김희진',t:'주세요',r:'Mixer'},
+  {date:'2024.09.26',a:'박민혜',t:'Love U Angel',r:'Mixer'},
+  {date:'2024.09.18',a:'Frutis Zipper',t:'NEW KAWAII',r:'Mixer'},
+  {date:'2024.09.12',a:'위은총',t:'사랑학개론',r:'Mixer'},
+  {date:'2024.09.08',a:'스탠딩에그',t:'숲',r:'Mixer'},
+  {date:'2024.08.26',a:'오마이걸',t:'Dreamy Resonance',r:'Mixer'},
+  {date:'2024.08.01',a:'여동생',t:'초록 여름 매미',r:'Mixer'},
+  {date:'2024.07.26',a:'펀치(Punch)',t:'굿파트너 OST Part.2',r:'Mixer'},
+  {date:'2024.05.10',a:'손헌수',t:'꽃가마',r:'Mixer'},
+  {date:'2024.04.11',a:'스탠딩에그',t:'Shinedrop',r:'Mixer'},
+  {date:'2024.04.03',a:'김무진',t:'웃자',r:'Mixer'},
+  {date:'2024.03.30',a:'심각한 개구리',t:'지금 뭐 해?',r:'Mixer'},
+  {date:'2024.03.23',a:'OWA',t:'Look Back',r:'Mixer'},
+  {date:'2024.03.19',a:'이영현',t:'그런 사람 또 없습니다',r:'Mixer'},
+  {date:'2024.03.14',a:'오마이걸',t:'2023 FAN CONCERT BLU-RAY',r:'Mixer'},
+  {date:'2024.03.01',a:'유현아 (HAN9A)',t:'You',r:'Mixer / Mastering Engineer'},
+  {date:'2024.02.28',a:'위은총',t:'마음이더라',r:'Mixer'},
+  {date:'2024.02.21',a:'이찬희',t:'어떤 곳에',r:'Recording Engineer'},
+  {date:'2024.02.14',a:'빅마마',t:'사랑한다 말할 걸',r:'Mixer'},
+  {date:'2024.02.11',a:'always summer',t:'wilderness',r:'Mixer'},
+  {date:'2024.01.25',a:'JINI (지니)',t:'나의 별',r:'Mixer'},
+  {date:'2023.12.24',a:'이지영',t:'겁쟁이',r:'Mixer'},
+  {date:'2023.12.04',a:'SNOWTAPE',t:'SNOWTAPE',r:'Mixer / Producer / Mastering Engineer'},
+  {date:'2023.11.27',a:'미서니',t:'이별, 꿈',r:'Mixer / Producer / Mastering Engineer'},
+  {date:'2023.11.24',a:'위은총',t:'미워할 이유를 찾으려 해',r:'Mixer'},
+  {date:'2023.09.19',a:'스탠딩에그',t:'스물 아홉',r:'Mixer'},
+  {date:'2023.09.19',a:'규빈',t:'낙서',r:'Mixer'},
+  {date:'2023.08.30',a:'WhtWing',t:'Where',r:'Mixer'},
+  {date:'2023.08.21',a:'스탠딩에그',t:'Summer End',r:'Mixer'},
+  {date:'2023.08.19',a:'위은총',t:'어때',r:'Mixer'},
+  {date:'2023.08.11',a:'TAN',t:'3rd Mini Album TAN MADE [I]',r:'Mixer'},
+  {date:'2023.08.01',a:'은유',t:'청춘',r:'Mixer'},
+  {date:'2023.06.26',a:'은유',t:'대학생 애가 (哀歌)',r:'Mixer'},
+  {date:'2023.05.12',a:'스탠딩에그',t:'Say Yes',r:'Mixer'},
+  {date:'2023.04.22',a:'Sondia',t:'닥터 차정숙 OST Part.2',r:'Mixer'},
+  {date:'2023.04.15',a:'로시 (Rothy)',t:'닥터 차정숙 OST Part.1',r:'Mixer'},
+  {date:'2023.03.24',a:'신화',t:'BamBiNun (밤비눈)',r:'Mixer'},
+  {date:'2023.03.21',a:'김연진',t:'반딧불',r:'Mixer / Mastering Engineer'},
+  {date:'2023.03.01',a:'신화',t:'2022 WDJ CONCERT - COME TO LIFE (VOD)',r:'Mixer'},
+  {date:'2023.02.23',a:'세리 (달샤벳)',t:'Dream',r:'Mixer'},
+  {date:'2022.12.12',a:'너울',t:'다시, 12월',r:'Producer / Mastering Engineer'},
+  {date:'2022.12.06',a:'신화 WDJ',t:'Come To Life',r:'Mixer'},
+  {date:'2022.11.29',a:'박민혜 (빅마마)',t:'더 사랑한 내가',r:'Mixer'},
+  {date:'2022.11.25',a:'위은총',t:'떠나가는 사랑을 불러',r:'Mixer'},
+  {date:'2022.10.06',a:'세리 (달샤벳)',t:'SLEEP',r:'Mixer'},
+  {date:'2022.09.30',a:'OMEGA X',t:'LOVE ME LIKE (Eng Ver.)',r:'Mixer'},
+  {date:'2022.09.30',a:'위은총',t:'소식',r:'Mixer'},
+  {date:'2022.09.19',a:'스탠딩에그',t:'농담',r:'Mixer'},
+  {date:'2022.09.02',a:'현주',t:'고양이가 궁금해',r:'Mixer'},
+  {date:'2022.08.26',a:'OMEGA X',t:'Stand up!',r:'Mixer'},
+  {date:'2022.07.30',a:'위은총',t:'헤벌레',r:'Mixer'},
+  {date:'2022.07.26',a:'TAN',t:"W SERIES '2TAN' (we Ver.)",r:'Mixer'},
+  {date:'2022.07.14',a:'스탠딩에그',t:'우리가 있어',r:'Mixer'},
+  {date:'2022.07.07',a:'스탠딩에그',t:'Winter Songs',r:'Mixer'},
+  {date:'2022.06.30',a:'담따',t:'Call me by your name',r:'Mixer'},
+  {date:'2022.06.15',a:'OMEGA X',t:'樂서(Story Written in Music)',r:'Mixer'},
+  {date:'2022.06.12',a:'스탠딩에그',t:'나는 어떡해',r:'Mixer'},
+  {date:'2022.06.05',a:'호소 (Ho So)',t:'달이 참 예뻐요',r:'Mixer'},
+  {date:'2022.05.06',a:'마미손 & 찬주',t:'잠수',r:'Mixer'},
+  {date:'2022.04.11',a:'산이 (San E)',t:'그걸로도 충분해요',r:'Mixer'},
+  {date:'2022.04.09',a:'위은총',t:'꽃피우다',r:'Mixer'},
+  {date:'2022.03.27',a:'스탠딩에그',t:'멀어진 만큼 (Distance)',r:'Mixer'},
+  {date:'2022.03.21',a:'하이라이트',t:'DAYDREAM',r:'Mixer'},
+  {date:'2022.03.02',a:'다운 (Dvwn)',t:'경찰수업 OST Part.5',r:'Mixer'},
+  {date:'2022.02.23',a:'권은비',t:'경찰수업 OST Part.4',r:'Mixer'},
+  {date:'2022.02.16',a:'하현상',t:'경찰수업 OST Part.3',r:'Mixer'},
+  {date:'2022.01.27',a:'위은총',t:'자화상 II',r:'Mixer'},
+  {date:'2022.01.09',a:'우물',t:'사막화',r:'Mixer'},
+  {date:'2022.01.05',a:'오메가엑스',t:'LOVE ME LIKE',r:'Mixer'},
+  {date:'2021.12.29',a:'아이유',t:'조각집',r:'Mixer'},
+  {date:'2021.12.28',a:'위은총',t:'There',r:'Mixer'},
+  {date:'2021.12.27',a:'김선주',t:'아싸라비야',r:'Mixer'},
+  {date:'2021.12.13',a:'찬공기',t:'찬공기',r:'Producer / Mastering Engineer'},
+  {date:'2021.12.13',a:'박소현',t:'Love Me',r:'Mixer / Producer / Mastering Engineer'},
+  {date:'2021.11.30',a:'은유',t:'집에 보내주세요 (퇴근송)',r:'Mixer'},
+  {date:'2021.11.13',a:'이영현',t:'유희열의 스케치북 With you',r:'Mixer'},
+  {date:'2021.11.09',a:'최구슬',t:'누니',r:'Mastering Engineer'},
+  {date:'2021.10.20',a:'김홍남',t:'김홍남 투 더 화성',r:'Mixer'},
+  {date:'2021.10.06',a:'모듀에스쿨',t:"FEELIN' LIKE",r:'Mixer'},
+  {date:'2021.09.23',a:'도은',t:'거리두기',r:'Mixer'},
+  {date:'2021.09.22',a:'Lu Hu',t:'一生一世 Forever and Ever OST',r:'Mixer'},
+  {date:'2021.09.20',a:'양요섭',t:'Chocolate Box',r:'Mixer'},
+  {date:'2021.09.06',a:'오메가엑스',t:"WHAT'S GOIN' ON",r:'Mixer'},
+  {date:'2021.08.15',a:'스탠딩에그',t:'무슨 생각해',r:'Mixer'},
+  {date:'2021.07.31',a:'악마판사 OST',t:'Part.3 (tvN)',r:'Mixer'},
+  {date:'2021.07.06',a:'손헌수',t:'빵빠레',r:'Mixer'},
+  {date:'2021.06.30',a:'오메가엑스',t:'VAMOS',r:'Mixer'},
+  {date:'2021.05.09',a:'윤건형',t:'What Opens Your Heart?',r:'Mixer'},
+  {date:'2021.05.09',a:'스탠딩에그',t:'Everyday',r:'Mixer'},
+  {date:'2021.03.20',a:'스탠딩에그',t:'Letters from my old friend',r:'Mixer'},
+  {date:'2020.10.15',a:'하영생',t:'조금만 사랑했다면..',r:'Mixer'},
+  {date:'2020.10.08',a:'위키미키',t:'미니4 NEW RULES',r:'Mixer'},
+  {date:'2020.09.10',a:'제이화',t:'STOP Apologizing',r:'Mixer / Producer'},
+  {date:'2020.09.08',a:'스탠딩에그',t:'Speechless',r:'Mixer'},
+  {date:'2020.08.04',a:'제이화',t:'Come As Wind',r:'Mixer / Producer'},
+  {date:'2020.07.17',a:'한나',t:'우아한 친구들 OST',r:'Mixer'},
+  {date:'2020.05.22',a:'스탠딩에그',t:'친구에서 연인',r:'Mixer'},
+  {date:'2020.05.11',a:'신혜성',t:'Shin Hye Sung Concert DVD',r:'Mixer'},
+  {date:'2020.05.11',a:'스탠딩에그',t:"I'm Dawn",r:'Mixer'},
+  {date:'2020.02.21',a:'제이화',t:'ZOO',r:'Mixer / Producer'},
+  {date:'2020.01.23',a:'제이화',t:'너를 만나',r:'Mixer / Producer'},
+  {date:'2019.12.08',a:'정진우',t:'초콜릿 OST',r:'Mixer'},
+  {date:'2019.12.01',a:'세븐틴',t:'초콜릿 OST Part.1',r:'Mixer'},
+  {date:'2019.11.12',a:'세븐어클락',t:'백야: White Night',r:'Mixer'},
+  {date:'2019.10.11',a:'와인루프',t:'시소',r:'Mixer'},
+  {date:'2019.10.08',a:'신혜성',t:'Setlist',r:'Mixer'},
+  {date:'2019.10.01',a:'제이화',t:'섭스타',r:'Mixer / Producer'},
+  {date:'2019.09.29',a:'스탠딩에그',t:'POETIC',r:'Mixer'},
+  {date:'2019.09.26',a:'전수경',t:'여, 행하라',r:'Mixer'},
+  {date:'2019.09.10',a:'드림캐쳐',t:'The Beginning Of The End',r:'Mixer'},
+  {date:'2019.08.30',a:'제이화',t:'무대공포증',r:'Mixer / Producer'},
+  {date:'2019.07.20',a:'PRODUCE X 101',t:'FINAL',r:'Mixer'},
+  {date:'2019.07.15',a:'스탠딩에그',t:'나만 알고 싶은 노래',r:'Mixer'},
+  {date:'2019.07.12',a:'신화',t:'SHINHWA 20th Anniversary Concert Heart DVD',r:'Mixer'},
+  {date:'2019.07.08',a:'신혜성',t:'나의 너에게',r:'Mixer'},
+  {date:'2019.07.01',a:'제이화',t:'용기가 필요해',r:'Mixer / Producer'},
+  {date:'2019.05.14',a:'스탠딩에그',t:'잠 못 드는 그대에게',r:'Mixer'},
+  {date:'2019.04.01',a:'이석훈',t:'완벽한날',r:'Mixer'},
+  {date:'2019.03.31',a:'박수홍 X 손헌수',t:'박수홍 & 손헌수',r:'Mixer'},
+  {date:'2019.03.03',a:'스탠딩에그',t:'너라는 세상',r:'Mixer'},
+  {date:'2019.02.21',a:'세븐어클락',t:'Get Away',r:'Mixer'},
+  {date:'2019.01.15',a:'테이크',t:'잘사니',r:'Mixer'},
+  {date:'2018.12.31',a:'신혜성',t:'2017 Weekly Concert Serenity DVD',r:'Mixer'},
+  {date:'2018.11.04',a:'백청강',t:'꼴에서',r:'Mixer'},
+  {date:'2018.10.08',a:'알파벳',t:'신세계',r:'Mixer'},
+  {date:'2018.10.02',a:'스탠딩에그',t:'사랑은',r:'Mixer'},
+  {date:'2018.09.07',a:'스탠딩에그',t:'사랑에 아파본 적 있나요?',r:'Mixer'},
+  {date:'2018.09.01',a:'PRODUCE 48',t:'FINAL',r:'Mixer'},
+  {date:'2018.08.28',a:'신화',t:'HEART',r:'Mixer'},
+  {date:'2018.07.17',a:'신화',t:'19TH ANNIVERSARY SUMMER LIVE MOVE DVD',r:'Mixer'},
+  {date:'2018.06.28',a:'전진',t:'THE SEASONS REVOLVE - SUMMER',r:'Mixer'},
+  {date:'2018.06.14',a:'손헌수',t:'GET UP',r:'Mixer'},
+  {date:'2018.05.11',a:'스탠딩에그',t:'소확행',r:'Mixer'},
+  {date:'2018.04.19',a:'김규종',t:'Play In Nature',r:'Mixer'},
+  {date:'2018.04.17',a:'JBJ',t:'NEW MOON',r:'Mixer'},
+  {date:'2018.03.26',a:'신화',t:'All Your Dreams',r:'Mixer'},
+  {date:'2018.03.07',a:'캔도',t:'그때부터야',r:'Mixer'},
+  {date:'2018.02.27',a:'테이크',t:'THE SECOND',r:'Mixer'},
+  {date:'2018.01.17',a:'JBJ',t:'True Colors',r:'Mixer'},
+  {date:'2018.01.03',a:'크리샤 츄',t:'Dream Of Paradise',r:'Mixer'},
+  {date:'2018.01.01',a:'김규종',t:'Play In Nature Part.3 SNOW FLAKE',r:'Mixer'},
+  {date:'2017.12.01',a:'비 (Rain)',t:'MY LIFE愛',r:'Mixer'},
+  {date:'2017.12.01',a:'스탠딩에그',t:'DRAMATIC',r:'Mixer'},
+  {date:'2017.11.14',a:'김동완',t:'TRACE OF EMOTION',r:'Mixer'},
+  {date:'2017.10.25',a:'스탠딩에그',t:'바보야',r:'Mixer'},
+  {date:'2017.10.18',a:'JBJ',t:'FANTASY',r:'Mixer'},
+  {date:'2017.10.02',a:'김규종',t:'Play In Nature Part.2 FOREST',r:'Mixer'},
+  {date:'2017.09.08',a:'스탠딩에그',t:'오늘 밤은',r:'Mixer'},
+  {date:'2017.09.05',a:'B.A.P',t:'BLUE',r:'Mixer'},
+  {date:'2017.09.05',a:'신혜성',t:'Serenity',r:'Mixer'},
+  {date:'2017.08.28',a:'오늘(Today)',t:'Moonlit',r:'Mixer'},
+  {date:'2017.08.10',a:'인순이',t:'Let Everyone Shine (2018 평창 동계올림픽)',r:'Mixer'},
+  {date:'2014.04.24',a:'브랜뉴직',t:'Midnight Traveler 2',r:'Mixer'},
+  {date:'2017.07.06',a:'테이크',t:'PART.2 TAKE',r:'Mixer'},
+  {date:'2017.07.04',a:'이효리',t:'BLACK',r:'Mixer'},
+  {date:'2017.06.28',a:'스탠딩에그',t:'너라면 괜찮아',r:'Mixer'},
+  {date:'2017.06.22',a:'신화',t:'2016 Shinhwa Live Unchanging DVD',r:'Mixer'},
+  {date:'2017.06.20',a:'더블에스301',t:'2nd MiniAlbum',r:'Mixer'},
+  {date:'2017.06.10',a:'킬라그램',t:'좋아 죽어',r:'Mixer'},
+  {date:'2017.06.08',a:'더블에스301',t:'UNISON VOLUME 1',r:'Mixer'},
+  {date:'2017.06.07',a:'오늘(Today)',t:'DO IT DO IT',r:'Mixer'},
+  {date:'2017.05.10',a:'김규종',t:'Play In Nature Part.1 SPRING',r:'Mixer'},
+  {date:'2017.04.11',a:'UNIT BLACK',t:'뺏겠어',r:'Mixer'},
+  {date:'2017.04.06',a:'김형준',t:'AM to PM 7-5-11-3',r:'Mixer'},
+  {date:'2017.03.27',a:'다소나',t:'왠지 난 말야',r:'Mixer'},
+  {date:'2017.03.17',a:'스탠딩에그',t:'First Love',r:'Mixer'},
+  {date:'2017.03.08',a:'김형준',t:'AM to PM 5-11-3',r:'Mixer'},
+  {date:'2017.02.27',a:'블락비',t:'2016 Live Concert Blockbuster DVD',r:'Mixer'},
+  {date:'2017.01.02',a:'신화',t:'13TH UNCHANGING - TOUCH',r:'Mixer'},
+  {date:'2016.12.19',a:'신화',t:'2016 SHINHWA 18th Anniversary Concert Hero',r:'Mixer'},
+  {date:'2016.12.12',a:'솔드아웃',t:'8:24',r:'Mixer'},
+  {date:'2016.12.09',a:'더블에스301',t:'ETERNAL 01',r:'Mixer'},
+  {date:'2016.12.05',a:'순_내 꿈은 당신과',t:'키이츠서울',r:'Mixer'},
+  {date:'2016.11.29',a:'신화',t:'UNCHANGING PART1',r:'Mixer'},
+  {date:'2016.11.16',a:'테이크',t:'왈칵',r:'Mixer'},
+  {date:'2016.11.11',a:'스탠딩에그',t:'VOICE',r:'Mixer'},
+  {date:'2016.10.22',a:'신화',t:'아는사이',r:'Mixer'},
+  {date:'2016.10.13',a:'다비치',t:'50 X HALF',r:'Mixer'},
+  {date:'2016.10.07',a:'마혜령',t:'Beautify',r:'Mixer'},
+  {date:'2016.08.24',a:'신혜성',t:'2016 SHIN HYE SUNG CONCERT WEEKLY DELIGHT',r:'Mixer'},
+  {date:'2016.08.08',a:'B.A.P',t:"PUT'EM UP",r:'Mixer'},
+  {date:'2016.08.03',a:'스탠딩에그',t:'여름밤에 우린',r:'Mixer'},
+  {date:'2016.07.28',a:'이민우',t:'Christmas Live 2015 DVD',r:'Mixer'},
+  {date:'2016.07.08',a:'C.I.V.A',t:'왜 불러',r:'Mixer'},
+  {date:'2016.07.04',a:'비투비',t:'Born To Beat TIME CONCERT DVD',r:'Mixer'},
+  {date:'2016.06.30',a:'윤건형',t:'잠시라 생각할게',r:'Mixer'},
+  {date:'2016.06.09',a:'더블에스301',t:'ESTRENO',r:'Mixer'},
+  {date:'2016.06.07',a:'스탠딩에그',t:'똑똑똑',r:'Mixer'},
+  {date:'2016.05.12',a:'호소 (Ho So)',t:'Love Love Love',r:'Mixer'},
+  {date:'2016.05.11',a:'윤한',t:'Hello',r:'Mixer'},
+  {date:'2016.04.28',a:'김동완',t:'K',r:'Mixer'},
+  {date:'2016.04.21',a:'테이크',t:'WHY',r:'Mixer'},
+  {date:'2016.03.25',a:'비스트',t:'2015 Beautiful Show DVD',r:'Mixer'},
+  {date:'2016.02.16',a:'더블에스301',t:'ETERNAL 5',r:'Mixer'},
+  {date:'2016.01.12',a:'신혜성',t:'delight',r:'Mixer'},
+  {date:'2016.01.05',a:'이민우',t:'콘서트 DVD: M STEP',r:'Mixer'},
+  {date:'2015.12.04',a:'스탠딩에그',t:'inner',r:'Mixer'},
+  {date:'2015.11.27',a:'김동완',t:'W',r:'Mixer'},
+  {date:'2014.06.27',a:'브랜뉴직',t:'Midnight Traveler 3',r:'Mixer'},
+  {date:'2015.11.25',a:'신화',t:'17주년 기념 콘서트 DVD: WE',r:'Mixer'},
+  {date:'2015.10.21',a:'김동완',t:'D',r:'Mixer'},
+  {date:'2014.12.29',a:'신혜성',t:'SHIN HYE SUNG - Once Again #6',r:'Mixer'},
+  {date:'2014.12.23',a:'김동완',t:'He_Starlight',r:'Mixer'},
+  {date:'2014.12.01',a:'JYJ',t:'작업',r:'Mixer'},
+  {date:'2014.12.01',a:'민우 (M)',t:'미니앨범',r:'Mixer'},
+  {date:'2014.12.01',a:'박종호',t:'미니앨범',r:'Mixer'},
+  {date:'2014.11.20',a:'김동완',t:'He',r:'Mixer'},
+  {date:'2014.10.31',a:'신혜성',t:'SHIN HYE SUNG - Once Again #4',r:'Mixer'},
+  {date:'2014.09.30',a:'신혜성',t:'SHIN HYE SUNG - Once Again #3',r:'Mixer'},
+  {date:'2014.08.25',a:'신혜성',t:'SHIN HYE SUNG - Once Again #2',r:'Mixer'},
+  {date:'2014.05.16',a:'아이유',t:'꽃갈피',r:'Mixer'},
+  {date:'2014.05.08',a:'스탠딩에그',t:'36.5',r:'Mixer'},
+  {date:'2014.01.02',a:'비 (Rain)',t:'RAIN EFFECT',r:'Mixer'},
+  {date:'2013.12.01',a:'김재중 (JYJ)',t:'1st 정규앨범',r:'Mixer'},
+  {date:'2013.12.01',a:'김현중',t:'한국어앨범',r:'Mixer'},
+  {date:'2013.12.01',a:'준수 (JYJ)',t:'2nd 정규앨범',r:'Mixer'},
+  {date:'2013.12.01',a:'스탠딩에그',t:'3rd 정규앨범',r:'Mixer'},
+  {date:'2013.12.01',a:'김현중',t:'Tonight EP (Japan)',r:'Mixer'},
+  {date:'2013.12.01',a:'장근석 (TEAM H)',t:'I Just Wanna Have Fun',r:'Mixer'},
+  {date:'2013.12.01',a:'김현중',t:'Heat EP (Japan)',r:'Mixer'},
+  {date:'2013.12.01',a:'크로스진 (Cross Gene)',t:'Shooting Star EP / Crazy',r:'Mixer'},
+  {date:'2013.08.30',a:'신혜성',t:"2012-2013 Shin Hye Sung Concert The Year\'s Journey",r:'Mixer'},
+  {date:'2013.05.16',a:'신화',t:'11집 THE CLASSIC',r:'Mixer'},
+  {date:'2012.12.04',a:'신혜성',t:'WINTER POETRY',r:'Mixer'},
+  {date:'2012.12.01',a:'크로스진 (Cross Gene)',t:'Timeless (Japan)',r:'Mixer'},
+  {date:'2012.12.01',a:'포미닛',t:'Volume Up',r:'Mixer'},
+  {date:'2012.12.01',a:'스탠딩에그',t:"2nd 'LIKE'",r:'Mixer'},
+  {date:'2012.12.01',a:'이이언 (eAeon)',t:'GUILT-FREE',r:'Mixer / Producer'},
+  {date:'2012.10.05',a:'가인',t:'Talk about S.',r:'Mixer'},
+  {date:'2012.03.23',a:'신화',t:"10th 'THE RETURN'",r:'Mixer'},
+  {date:'2011.12.27',a:'신혜성',t:'embrace',r:'Mixer'},
+  {date:'2011.12.01',a:'슈퍼스타K 3',t:'',r:'Mixer'},
+  {date:'2011.12.01',a:'손담비',t:"Happy Pledis 2012 'LOVE LETTER'",r:'Mixer'},
+  {date:'2011.12.01',a:'애프터스쿨',t:'정규 1집',r:'Mixer'},
+  {date:'2011.12.01',a:'김현중',t:'2nd Mini Album "LUCKY GUY"',r:'Mixer'},
+  {date:'2011.12.01',a:'신혜성',t:'정규 7집',r:'Mixer'},
+  {date:'2011.12.01',a:'엠블랙 (Mblaq)',t:'정규 1집',r:'Mixer'},
+  {date:'2011.04.01',a:'김재석 (원티드)',t:'2년만에',r:'Mixer'},
+  {date:'2011.12.01',a:'영화 OST',t:"'푸른소금' OST",r:'Mixer'},
+  {date:'2011.05.06',a:'김재석 (원티드)',t:'김재석 Of WANTED',r:'Mixer'},
+  {date:'2010.12.01',a:'채동하',t:'정규 1집',r:'Mixer'},
+  {date:'2010.12.01',a:'배다해',t:'Single',r:'Mixer'},
+  {date:'2010.12.01',a:'스탠딩에그',t:'정규 1집',r:'Mixer'},
+  {date:'2010.12.01',a:'SundaySunset',t:'정규 1집',r:'Mixer / Producer'},
+  {date:'2010.12.01',a:'싸이',t:'PSYFIVE (5th)',r:'Mixer'},
+  {date:'2010.12.01',a:'엠블랙 (Mblaq)',t:'Y',r:'Mixer'},
+  {date:'2010.12.01',a:"걸스데이 (Girl's Day)",t:"Girl's Day Party #1",r:'Mixer'},
+  {date:'2010.12.01',a:'3rdCoast',t:'Altered Surface',r:'Mixer / Producer'},
+  {date:'2010.12.01',a:'비 (Rain)',t:'Back To The Basic',r:'Mixer'},
+  {date:'2010.12.01',a:'린 (LYN)',t:'Candy Train (6th Part 2)',r:'Mixer'},
+  {date:'2010.12.01',a:'CRASH',t:'The Paragon Of Animals (6th)',r:'Technical Director'},
+  {date:'2010.11.30',a:'린 (LYN)',t:"Winter\'s Melody (Single)",r:'Mixer'},
+  {date:'2010.11.19',a:'신혜성',t:'안녕 그리고 안녕',r:'Mixer'},
+  {date:'2010.07.15',a:'신혜성',t:'THE CYCLE 2005-2009 SHIN HYE SUNG',r:'Mixer'},
+  {date:'2010.07.15',a:'신혜성',t:'Find Voice In Song SHIN HYE SUNG',r:'Mixer'},
+  {date:'2009.12.01',a:'신혜성',t:'Keep Leaves',r:'Mixer'},
+  {date:'2009.12.01',a:'백지영',t:'Sensibility',r:'Mixer'},
+  {date:'2009.12.01',a:'린 (LYN)',t:"Let Go, Let in, It's New Day",r:'Mixer'},
+  {date:'2009.12.01',a:'SS501',t:'SS501 Special Album',r:'Mixer'},
+  {date:'2009.06.23',a:'M (이민우)',t:'MINNOVATION Special',r:'Mixer'},
+  {date:'2008.12.01',a:'M (이민우)',t:'M Rizing',r:'Mixer'},
+  {date:'2008.12.01',a:'신혜성',t:'Live and Let Live',r:'Mixer'},
+  {date:'2008.12.01',a:'요조',t:'Treveler',r:'Mixer'},
+  {date:'2008.12.01',a:'손담비',t:'Mini album Vol.2',r:'Mixer'},
+  {date:'2008.12.01',a:'신화',t:'9th',r:'Mixer'},
+  {date:'2008.12.01',a:'전진',t:'New Decade',r:'Mixer'},
+  {date:'2008.12.01',a:'린, 신혜성',t:'그 남자 그 여자 이야기',r:'Mixer'},
+  {date:'2008.12.01',a:'타루',t:'Rainbow',r:'Mixer'},
+  {date:'2008.11.21',a:'SS501',t:'SS501 스페셜앨범',r:'Mixer'},
+  {date:'2008.10.15',a:'비 (Rain)',t:'Rainism',r:'Mixer'},
+  {date:'2008.07.16',a:'이효리',t:"It's Hyorish",r:'Mixer'},
+  {date:'2008.07.16',a:'이효리',t:"It's Hyorish 1st Concert",r:'Music Director'},
+  {date:'2008.06.16',a:'Brown Classic With 요조 & 에릭',t:'Brown Classic 1st',r:'Mixer'},
+  {date:'2008.06.05',a:'김현정',t:'In N Out',r:'Mixer'},
+  {date:'2008.03.13',a:'SS501',t:'데자뷰 (Single)',r:'Mixer'},
+  {date:'2008.02.27',a:'신혜성',t:'그 남자 이야기',r:'Mixer'},
+  {date:'2008.02.27',a:'신혜성 & 린(LYn)',t:'그 남자 그 여자 이야기',r:'Mixer'},
+  {date:'2008',a:'Harpist K',t:'Vivace',r:'Recording Engineer / Mixer'},
+  {date:'2007.12.05',a:'신화',t:'Shinhwa Winter Story 2007',r:'Mixer'},
+  {date:'2007.12.01',a:'As One',t:'우리가 알고 있는 사랑 이야기 다섯',r:'Mixer'},
+  {date:'2007.12.01',a:'Kara',t:'Blooming',r:'Mixer'},
+  {date:'2007.12.01',a:'김동완',t:'Kimdongwan is',r:'Mixer'},
+  {date:'2007.12.01',a:'박선주',t:'Dreamer',r:'Mixer'},
+  {date:'2007.08.08',a:'신혜성',t:'The Beginning, New Days',r:'Mixer'},
+  {date:'2007.07.13',a:'M (이민우)',t:'Explore M',r:'Mixer'},
+  {date:'2007.06.28',a:'김동완',t:'Kim Dong Wan Is',r:'Mixer'},
+  {date:'2007.06.18',a:'손담비',t:'손담비 1st Single \"Cry Eye\"',r:'Mixer'},
+  {date:'2007.03.22',a:'M (이민우)',t:'Live Works 2006,2007 Lee Min Woo',r:'Mixer'},
+  {date:'2007.03.08',a:'린 (LYN)',t:'The Pride Of The Morning',r:'Mixer'},
+  {date:'2007.02.25',a:'이효리',t:'Toc Toc Toc',r:'Mixer'},
+  {date:'2007.01.25',a:'신화',t:'Winter Story 2006~2007',r:'Mixer'},
+  {date:'2006.11.29',a:'마야 (Maya)',t:'3집 Road to Myself',r:'Mixer'},
+  {date:'2006.11.16',a:'전진',t:'사랑이 오지 않아요',r:'Mixer'},
+  {date:'2006.11.10',a:'SS501',t:'SS501 S.T 01 NOW',r:'Mixer'},
+  {date:'2006.09.07',a:'신화',t:'僕らの心には太陽がある',r:'Mixer'},
+  {date:'2006.05.11',a:'신화',t:'State of the Art',r:'Mixer'},
+  {date:'2006.04.14',a:'김우주',t:'離別(이별)',r:'Mixer'},
+  {date:'2006.02.09',a:'이효리',t:'Dark Angel',r:'Mixer'},
+  {date:'2005.12.05',a:'SS501',t:'SS501 싱글 2집',r:'Mixer'},
+  {date:'2005.11.09',a:'M (이민우)',t:'M 2집',r:'Mixer'},
+  {date:'2005.10.17',a:'서지영',t:'Listen To My Heart',r:'Mixer'},
+  {date:'2005.09.01',a:'M (이민우)',t:'Bump',r:'Mixer'},
+  {date:'2005.08.05',a:'신화',t:'Summer Story 2005',r:'Mixer'},
+  {date:'2005.06.23',a:'SS501',t:'SS501 1',r:'Mixer'},
+  {date:'2005.05.06',a:'신혜성',t:'오월지련',r:'Recording Engineer / Mixer'},
+  {date:'2005.03.10',a:'M (이민우)',t:'If You..(Single)',r:'Mixer'},
+  {date:'2005.01.28',a:'Various Artists',t:'세잎 클로버 OST',r:'Mixer'},
+  {date:'2004.12.18',a:'신화',t:'Winter Story 2004~05',r:'Mixer'},
+  {date:'2004.06.18',a:'못 (Mot)',t:'비선형 (Non-Linear)',r:'Recording Engineer / Mixer'},
+  {date:'2004.01.19',a:'샤인 (Shyne)',t:'Shyne 01',r:'Mixer'},
+  {date:'2004.01.06',a:'김연우',t:'연인',r:'Recording Engineer / Mixer'},
+  {date:'2003.11.22',a:'M (이민우)',t:'Un-Touch-Able',r:'Mixer'},
+  {date:'2003.07.12',a:'AND',t:'AND 1st',r:'Mixer'},
+  {date:'2003.06.10',a:'김민종',t:'상처받은 사람들을 위해',r:'Recording Engineer / Mixer'},
+  {date:'2003.04.01',a:'CRASH',t:'The Massive Crush',r:'Recording Engineer / Mixer'},
+  {date:'2002.12.17',a:'김장훈',t:'Live in Wonderland',r:'Recording Engineer / Mixer'},
+  {date:'2002.11.01',a:'조규찬',t:'무지개',r:'Recording Engineer / Mixer'},
+  {date:'2002.05.30',a:'조관우',t:'My Memories 2',r:'Recording Engineer'},
+  {date:'2001.12.13',a:'김장훈',t:'Natural',r:'Recording Engineer'},
+  {date:'2001.11.01',a:'조규찬',t:'Thank you (for saving my life)',r:'Recording Engineer / Mixer'},
+  {date:'2001.09.25',a:'김민종',t:"7집 You\'re My Life",r:'Recording Engineer'},
+  {date:'2001.07.12',a:'조규찬',t:'해빙',r:'Recording Engineer'},
+  {date:'2001.03.01',a:'샤크라 (Chakra)',t:'끝',r:'Recording Engineer'},
+  {date:'2001.01.12',a:'Various Artists',t:'Indie Power 2001',r:'Recording Engineer / Mixer'},
+  {date:'2000.12.01',a:'샤크라 (Chakra)',t:'Ringing Gingle Bells',r:'Recording Engineer'},
+  {date:'2000.11.29',a:'김장훈',t:'Innocence',r:'Recording Engineer'},
+  {date:'2000.11.08',a:'디바 (DIVA)',t:'Naughty',r:'Recording Engineer'},
+  {date:'2000.11.01',a:'WAX',t:'WAX',r:'Recording Engineer / Background Vocal'},
+  {date:'2000.05.03',a:'윤손하',t:'Sona',r:'Recording Engineer'},
+  {date:'2000.03.29',a:'김민종',t:'6집 왜',r:'Recording Engineer'},
+  {date:'2000.03.24',a:'CRASH',t:'Terminal Dream Flow',r:'Recording Engineer'},
+  {date:'1999.12.10',a:'유승준',t:'Over And Over',r:'Recording Engineer'},
+  {date:'1999.02.01',a:'디바 (DIVA)',t:'Dream',r:'Recording Engineer'},
+  {date:'1998.04.01',a:'윤상',t:'Insensible (Single)',r:'Recording Engineer'},
+  {date:'1997.01.01',a:'이승환',t:'His Ballad',r:'Recording Engineer'},
+  {date:'2014.09.05',a:'브랜뉴직',t:'Beautiful',r:'Mixer / Producer'},
+  {date:'2014.12.29',a:'브랜뉴직',t:'EVERYTHING',r:'Mixer / Producer'},
+  {date:'2015.05.11',a:'브랜뉴직',t:'SUNNY',r:'Mixer / Producer'},
+  {date:'2015.07.13',a:'브랜뉴직',t:"Who's That",r:'Mixer / Producer'},
+  {date:'2015.11.27',a:'브랜뉴직',t:'Phone Talk',r:'Mixer / Producer'},
+  {date:'2017.07.27',a:'브랜뉴직',t:'Under The Moon',r:'Mixer / Producer'},
+  {date:'2007.05.29',a:'못 (Mot)',t:'이상한 계절',r:'Mixer'},
+  {date:'2010.12.10',a:'이이언 (eAeon)',t:'All I Want For Christmas',r:'Mixer / Producer'},
+  {date:'2012.01.10',a:'이이언 (eAeon)',t:'슬픈 마네킹',r:'Mixer / Producer'},
+  {date:'2012.12.26',a:'이이언 (eAeon)',t:'Realize',r:'Mixer / Producer'},
+  {date:'2012.12.18',a:'이이언 (eAeon)',t:'자랑',r:'Mixer / Producer'},
+  {date:'2013.06.28',a:'김재석',t:'RainDrop',r:'Mixer'},
+];
+
+let lang='ko';
+
+function gy(d){return d.slice(0,4);}
+
+function roleAbbr(r){
+  if(!r) return '<span style="color:var(--border)">—</span>';
+  const map={
+    'mixer':'MIX',
+    'recording engineer':'REC',
+    'mastering engineer':'MAS',
+    'producer':'PROD',
+    'music director':'M.DIR',
+    'technical director':'T.DIR',
+    'background vocal':'B.Vox',
+  };
+  const parts = r.split(/\s*[/&]\s*/);
+  return parts.map(p=>{
+    const key=p.trim().toLowerCase();
+    const abbr=map[key]||p.trim().toUpperCase().slice(0,4);
+    return `<span class="w-badge">${abbr}</span>`;
+  }).join('');
+}
+
+function renderWorks(filter){
+  let filtered=filter==='all'?works.slice():works.filter(w=>gy(w.date)===filter);
+  filtered.sort((a,b)=>b.date.localeCompare(a.date));
+  document.getElementById('wc').textContent=filtered.length+(lang==='ko'?'개 작품':' works');
+  let html='',cur='';
+  filtered.forEach(w=>{
+    const y=gy(w.date);
+    if(y!==cur){html+=`<div class="yr-head">${y}</div>`;cur=y;}
+    const mm=w.date.slice(5,7)+'.'+w.date.slice(8,10);
+    const artist=w.a;
+    const title=w.t||'';
+    html+=`<div class="work-row">
+      <div class="w-date">${mm}</div>
+      <div class="w-info"><div class="w-artist">${artist}</div>${title?`<div class="w-title">${title}</div>`:''}</div>
+      <div class="w-role">${roleAbbr(w.r)}</div>
+    </div>`;
+  });
+  document.getElementById('wl').innerHTML=html;
+}
+
+function initFilters(){
+  const years=[...new Set(works.map(w=>gy(w.date)))].sort((a,b)=>b-a);
+  let html=`<button class="wf-btn on" onclick="filterW('all',this)">${lang==='ko'?'전체':'All'}</button>`;
+  years.forEach(y=>{html+=`<button class="wf-btn" onclick="filterW('`+y+`',this)">${y}</button>`;});
+  document.getElementById('wf').innerHTML=html;
+  renderWorks('all');
+}
+
+function filterW(f,btn){
+  document.querySelectorAll('.wf-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderWorks(f);
+}
+
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='works') initFilters();
+}
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-ko').classList.toggle('on',l==='ko');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  document.querySelectorAll('[data-ko]').forEach(el=>{
+    const val=el.getAttribute('data-'+l);
+    if(val){
+      if(val.includes('<br>')){el.innerHTML=val;}
+      else{el.textContent=val;}
+    }
+  });
+  const wSec=document.getElementById('works');
+  if(wSec&&wSec.classList.contains('on')) initFilters();
+}
+
+initFilters();
+</script>
+</body>
+</html>
