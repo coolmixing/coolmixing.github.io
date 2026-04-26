@@ -114,8 +114,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
 <body>
 
 <div class="lang-bar">
-  <button class="lang-btn on" id="btn-ko" onclick="setLang('ko')">KO</button>
-  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-ko" onclick="setLang('ko')">KO</button>
+  <button class="lang-btn on" id="btn-en" onclick="setLang('en')">EN</button>
 </div>
 
 <div class="layout">
@@ -606,7 +606,7 @@ const works=[
   {date:'2013.06.28',a:'김재석',t:'RainDrop',r:'Mixer'},
 ];
 
-let lang='ko';
+let lang='en';
 
 function gy(d){return d.slice(0,4);}
 
@@ -691,6 +691,7 @@ const em=document.getElementById('sid-email');
 const addr=['coolmixing','naver.com'].join('@');
 em.innerHTML=`<a href="mailto:${addr}" style="color:inherit;text-decoration:none;">${addr}</a>`;
 
+setLang('en');
 initFilters();
 </script>
 </body>
