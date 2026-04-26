@@ -147,7 +147,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100
       </button>
     </nav>
     <div class="sid-foot">
-      <div class="sid-foot-item">coolmixing&#64;hongik.ac.kr</div>
+      <div class="sid-foot-item" id="sid-email"></div>
       <div class="sid-foot-item">02-3668-3765</div>
     </div>
   </aside>
@@ -691,6 +691,11 @@ function setLang(l){
   const wSec=document.getElementById('works');
   if(wSec&&wSec.classList.contains('on')) initFilters();
 }
+
+// Render email via JS to prevent Cloudflare detection
+const em=document.getElementById('sid-email');
+const addr=['coolmixing','naver.com'].join('@');
+em.innerHTML=`<a href="mailto:${addr}" style="color:inherit;text-decoration:none;">${addr}</a>`;
 
 initFilters();
 </script>
