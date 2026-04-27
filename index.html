@@ -630,7 +630,18 @@ function roleAbbr(r){
 }
 
 function renderWorks(filter){
-  let filtered=filter==='all'?works.slice():works.filter(w=>gy(w.date)===filter);
+  let filtered;
+  if(filter==='all'){
+    filtered=works.slice();
+  } else if(filter.endsWith('s')){
+    const decade=parseInt(filter);
+    filtered=works.filter(w=>{
+      const y=parseInt(gy(w.date));
+      return y>=decade && y<decade+10;
+    });
+  } else {
+    filtered=works.filter(w=>gy(w.date)===filter);
+  }
   filtered.sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('wc').textContent=filtered.length+(lang==='ko'?'개 작품':' works');
   let html='',cur='';
@@ -650,9 +661,9 @@ function renderWorks(filter){
 }
 
 function initFilters(){
-  const years=[...new Set(works.map(w=>gy(w.date)))].sort((a,b)=>b-a);
+  const decades=['2020s','2010s','2000s','1990s'];
   let html=`<button class="wf-btn on" onclick="filterW('all',this)">${lang==='ko'?'전체':'All'}</button>`;
-  years.forEach(y=>{html+=`<button class="wf-btn" onclick="filterW('`+y+`',this)">${y}</button>`;});
+  decades.forEach(d=>{html+=`<button class="wf-btn" onclick="filterW('`+d+`',this)">${d}</button>`;});
   document.getElementById('wf').innerHTML=html;
   renderWorks('all');
 }
